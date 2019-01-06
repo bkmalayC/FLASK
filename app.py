@@ -3,12 +3,11 @@ from BookModel import *
 from lib import *
 from settings import *
 
-#app = Flask(__name__)
 
 @app.route('/books')
 def get_books():
+    return json.dumps({'Books' : Book.get_all_books()})
 
-    return jsonify({'books' : books})
 
 @app.route('/books/<int:isbn>')
 def get_books_byIsbn (isbn):
@@ -79,7 +78,6 @@ def update_books(isbn) :
 
 
 @app.route('/books/<int:isbn>' , methods = ['DELETE'])
-
 def delete_book(isbn):
     deleted_book = []
     for book in books:
@@ -99,7 +97,5 @@ def delete_book(isbn):
         return Response(json.dumps(deleted_book) , status = 504)
 
     #return jsonify(deleted_book)
-
-
 
 app.run(port = 5000)
